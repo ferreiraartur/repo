@@ -16,17 +16,18 @@ public class CervejasController {
 	
 	
 	@RequestMapping("/cervejas/novo")
-	public String novo() {
+	public String novo(Cerveja cerveja) {
+		//model.addAttribute(new Cerveja());
 		return "cerveja/CadastroCerveja";
 	}
 	
 	
 	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
-	public String cadastrar(@Valid Cerveja cerv, BindingResult result,Model model, RedirectAttributes attributes){
+	public String cadastrar(@Valid Cerveja cerveja, BindingResult result,Model model, RedirectAttributes attributes){
 		
 		if (result.hasErrors()) {
-			model.addAttribute("mensagem", "Erro no formulário!");
-			return "cerveja/CadastroCerveja";
+			//model.addAttribute(cerveja);
+			return novo(cerveja);
 			
 		}
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
