@@ -11,11 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.model.Cerveja;
+import com.algaworks.brewer.model.Origem;
+import com.algaworks.brewer.model.Sabor;
 
 import repository.Cervejas;
+import repository.Estilos;
+import service.CadastroCervejaService;
 
 @Controller
 public class CervejasController {
@@ -23,33 +28,53 @@ public class CervejasController {
 	@Autowired
 	private Cervejas cervejas;
 	
+	@Autowired
+	private Estilos estilos;
+	
+	@Autowired
+	private CadastroCervejaService cadastroCervejaService;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(CervejasController.class);
 	
 	
 	@RequestMapping("/cervejas/novo")
-	public String novo(Cerveja cerveja) {
+	public ModelAndView novo(Cerveja cerveja) {
 		//model.addAttribute(new Cerveja());
-		logger.error("Aqui é um log de error!");
-		logger.info("Aqui é um log nível info");
+		//logger.error("Aqui é um log de error!");
+		//logger.info("Aqui é um log nível info");
+		//cervejas.findAll();
+		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
+		mv.addObject("sabores",Sabor.values());
+		mv.addObject("estilos", estilos.findAll());
+		mv.addObject("origens", Origem.values());
+		return mv;
 		
-		cervejas.findAll();
-		
-		
-		return "cerveja/CadastroCerveja";
 	}
 	
 	
 	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
-	public String cadastrar(@Valid Cerveja cerveja, BindingResult result,Model model, RedirectAttributes attributes){
+	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result,Model model, RedirectAttributes attributes){
 		
 		if (result.hasErrors()) {
 			//model.addAttribute(cerveja);
 			return novo(cerveja);
 			
 		}
+		
+		
+		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
-		return "redirect:/cervejas/novo";
+		System.out.println (">>> sku:"+ cerveja.getSku());
+		System.out.println (">>> sku:"+ cerveja.getNome());
+		System.out.println (">>> sku:"+ cerveja.getDescricao());
+		System.out.println(">>> sabor:"+ cerveja.getSabor());
+		System.out.println(">>> origem:"+ cerveja.getOrigem());
+		
+		
+		System.out.println(">>> estilo:"+ cerveja.getEstilo().getCodigo());
+		
+		return new ModelAndView ("redirect:/cervejas/novo");
 	}
 	
 	

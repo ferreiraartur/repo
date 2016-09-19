@@ -47,6 +47,24 @@ public class Cerveja {
 	@Enumerated(EnumType.STRING)
 	private Origem origem;
 	
+	public Origem getOrigem() {
+		return origem;
+	}
+	public void setOrigem(Origem origem) {
+		this.origem = origem;
+	}
+	public Sabor getSabor() {
+		return sabor;
+	}
+	public void setSabor(Sabor sabor) {
+		this.sabor = sabor;
+	}
+	public Estilo getEstilo() {
+		return estilo;
+	}
+	public void setEstilo(Estilo estilo) {
+		this.estilo = estilo;
+	}
 	@Enumerated(EnumType.STRING)
 	private Sabor sabor;
 	
