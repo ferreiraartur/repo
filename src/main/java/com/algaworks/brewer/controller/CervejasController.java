@@ -61,19 +61,10 @@ public class CervejasController {
 			return novo(cerveja);
 			
 		}
-		
-		
+			
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
-		System.out.println (">>> sku:"+ cerveja.getSku());
-		System.out.println (">>> sku:"+ cerveja.getNome());
-		System.out.println (">>> sku:"+ cerveja.getDescricao());
-		System.out.println(">>> sabor:"+ cerveja.getSabor());
-		System.out.println(">>> origem:"+ cerveja.getOrigem());
-		
-		
-		System.out.println(">>> estilo:"+ cerveja.getEstilo().getCodigo());
-		
+	
 		return new ModelAndView ("redirect:/cervejas/novo");
 	}
 	
