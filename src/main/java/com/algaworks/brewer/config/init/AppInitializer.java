@@ -6,6 +6,9 @@ import com.algaworks.brewer.config.JPAConfig;
 import com.algaworks.brewer.config.ServiceConfig;
 import com.algaworks.brewer.config.Webconfig;
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
+
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -35,6 +38,10 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		characterEncodingFilter.setForceEncoding(true);
 		
 		return new Filter[] { characterEncodingFilter };
+}
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(""));
 }
 
 }
