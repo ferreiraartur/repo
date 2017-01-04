@@ -80,6 +80,13 @@ public class Cerveja {
 	private Estilo estilo;
 	
 	
+	private String foto;
+	
+	
+	@Column(name= "content_type")
+	private String contentType;
+	
+	
 	@PrePersist @PreUpdate
 	private void prePersistUpdate(){
 		sku = sku.toUpperCase();
@@ -177,6 +184,22 @@ public class Cerveja {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 }
