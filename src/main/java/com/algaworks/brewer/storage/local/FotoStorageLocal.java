@@ -30,6 +30,27 @@ public class FotoStorageLocal implements FotoStorage {
 		this.local = getDefault().getPath(System.getenv("USERPROFILE"), ".brewerfotos");
 		criarPastas();
 	}
+	
+	//public FotoStorageLocal(Path path) {
+//		this.local = path;
+	//	criarPastas();
+//}
+	
+	@Override
+	public String salvarTemporariamente(MultipartFile[] files) {
+		String novoNome = null;
+		if (files != null && files.length > 0) {
+			MultipartFile arquivo = files[0];
+			novoNome = renomearArquivo(arquivo.getOriginalFilename());
+			try {
+				arquivo.transferTo(new File(this.localTemporario.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
+			} catch (IOException e) {
+				throw new RuntimeException("Erro salvando a foto na pasta temporária", e);
+			}
+		}
+		
+		return novoNome;
+}
 
 
 
@@ -52,21 +73,7 @@ public class FotoStorageLocal implements FotoStorage {
 	}
 		
 		
-	@Override
-	public String salvarTemporariamente(MultipartFile[] files) {
-		String novoNome = null;
-		if (files != null && files.length > 0) {
-			MultipartFile arquivo = files[0];
-			novoNome = renomearArquivo(arquivo.getOriginalFilename());
-			try {
-				arquivo.transferTo(new File(this.localTemporario.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
-			} catch (IOException e) {
-				throw new RuntimeException("Erro salvando a foto na pasta temporária", e);
-			}
-		}
-		
-		return novoNome;
-}
+	
 	
 	private String renomearArquivo(String nomeOriginal) {
 		String novoNome = UUID.randomUUID().toString() + "_" + nomeOriginal;
