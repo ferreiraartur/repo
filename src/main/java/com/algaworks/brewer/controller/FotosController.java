@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.algaworks.brewer.dto.FotoDTO;
 import com.algaworks.brewer.storage.FotoStorageRunnable;
-import com.algaworks.brewer.storage.local.FotoStorage;
+import com.algaworks.brewer.storage.FotoStorage;
 
 @RestController
 @RequestMapping("/fotos")
@@ -35,6 +35,11 @@ public class FotosController {
 	@GetMapping("/temp/{nome:.*}")
 	public byte[] recuperarFotoTemporaria(@PathVariable String nome) {
 		return fotoStorage.recuperarFotoTemporaria(nome);
+}
+	
+	@GetMapping("/{nome:.*}")
+	public byte[] recuperar(@PathVariable String nome) {
+		return fotoStorage.recuperar(nome);
 }
 	
 	
